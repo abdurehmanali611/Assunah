@@ -1,5 +1,5 @@
-import { View, Text, Linking } from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, Linking, LogBox } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { Image } from 'react-native'
 import { StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native';
@@ -36,6 +36,10 @@ const Home = ({navigation}) => {
             }
         
     }
+
+    useEffect(() => {
+        LogBox.ignoreLogs(['Auth'])
+    })
     
 
   return (

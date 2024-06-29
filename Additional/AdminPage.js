@@ -6,6 +6,7 @@ import { StyleSheet } from 'react-native'
 import { Image } from 'react-native'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../config/firebase'
+import { LogBox } from 'react-native'
 
 const AdminPage = ({navigation}) => {
 
@@ -15,8 +16,16 @@ const AdminPage = ({navigation}) => {
     const checkIfAdmin = () => {
 
         signInWithEmailAndPassword(auth, email, password)
-        .then(() => navigation.navigate('upload'))
-        .catch((err) => alert(err.message))
+        .then(() => {
+          setEmail('')
+          setPassword('')
+          navigation.navigate('upload')
+        })
+        .catch((err) => {
+          setEmail('')
+          setPassword('')
+          alert(err.message)
+        })
     }
 
   return (

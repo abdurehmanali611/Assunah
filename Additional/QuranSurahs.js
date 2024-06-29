@@ -6,6 +6,7 @@ const QuranSurahs = () => {
   const receivedIndex = useRoute().params?.index
   const [ayahinfo, setAyahInfo] = useState([])
   const [itemAtIndex, setItemAtIndex] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const fetchSurahs = async () => {
@@ -18,11 +19,21 @@ const QuranSurahs = () => {
         const ayahs = surahs[receivedIndex - 1].ayahs
         setItemAtIndex(ayahs)
       }
+      setIsLoading(false)
     }
 
     fetchSurahs()
 
   }, [receivedIndex])
+
+  if (isLoading) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size="large" color="#0000ff" />
+        <Text>Loading...</Text>
+      </View>
+    )
+  }
 
   return (
     <View>

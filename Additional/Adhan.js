@@ -17,7 +17,7 @@ const Adhan = () => {
     const [Imsak, setImsak] = useState()
     const [lat, setlat] = useState(null)
     const [lng, setlng] = useState(null)
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     
     const latlng = []
     const pray = []
@@ -47,9 +47,10 @@ const Adhan = () => {
     setCoordinates(latlng)
     setlat(coords.latitude)
     setlng(coords.longitude)
-    setLoading(true)
 
     praying()
+
+    setLoading(false)
 
     }
 
@@ -79,7 +80,6 @@ const Adhan = () => {
                 setSunset(item.Sunset)
                 setImsak(item.Imsak)
             })
-            setLoading(true)
     }
 
     useEffect(() => {
@@ -137,6 +137,15 @@ const Adhan = () => {
         
     }, [lat,lng])
 
+    if (loading) {
+        return (
+            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                <ActivityIndicator size="large" color="#00ff00" />
+                <Text>Loading...</Text>
+            </View>
+        )
+    }
+
   return (
     <View style={{gap: 15}}>
             <MapView
@@ -169,11 +178,7 @@ const Adhan = () => {
                 )}
             </MapView>
             <Text style={{textAlign: 'center', fontFamily: 'serif', fontSize: 16}}>Timed Approximatelly not Exactly</Text>
-         {!loading ? (<View>
-            <ActivityIndicator size={40} color='black'/>
-            <Text style={{textAlign: 'center'}}>Loading...</Text>
-         </View>)
-         : ( <View 
+          <View 
          style={{gap: 10, backgroundColor: `rgba(120,200,100,0.5)`, width: 320, marginHorizontal: 20, borderRadius: 20, height: 350, marginBottom: 10, paddingVertical: 10}}>
                 <View style={{flexDirection: 'row', gap: 50, alignSelf: 'center', marginVertical: 15}}>
                     <Text style={{fontSize: 20}}>Prayer Times</Text>
@@ -235,8 +240,7 @@ const Adhan = () => {
                     )}
                 </View>
             </View> 
-        )
-        }
+        
     </View>
   )
 }
